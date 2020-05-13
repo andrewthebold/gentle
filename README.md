@@ -17,8 +17,8 @@ The app shutdown in May 2020, and I decided to release _everything_. All code is
 ```
 .
 ├── admin-dashboard            # Basic moderation dashboard
-├── flutter-app                # The mobile app code (created in Flutter)
 ├── firebase                   # All "server" code for Gentle — Firestore rules, indexes, and cloud functions
+├── flutter-app                # The mobile app code (created in Flutter)
 └── landing-page               # The Next.js site hosted on gentle.app
 ```
 
