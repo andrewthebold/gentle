@@ -1,0 +1,38 @@
+.warning {
+  background: var(--color-white);
+  border: 0.1rem solid var(--color-gray-secondary);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-basic);
+  color: var(--color-off-black);
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 2rem;
+  padding: 1.2rem 1.6rem;
+  text-decoration: none;
+  transform: rotate(-1deg);
+  transition: opacity var(--animation-duration-fast)
+      var(--animation-curve-basic),
+    transform var(--animation-duration-fast) var(--animation-curve-basic);
+}
+
+.warning:active {
+  opacity: 0.8;
+  transform: scale(0.98) rotate(-1deg);
+}
+
+.title {
+  color: var(--color-red);
+  font-size: 1.2rem;
+}
+
+.link {
+  color: var(--color-blue);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.warning:hover .link,
+.warning:focus .link {
+  text-decoration: underline;
+}

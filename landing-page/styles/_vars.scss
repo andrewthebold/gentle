@@ -1,0 +1,24 @@
+:root {
+  --color-white: #fff;
+  --color-off-black: #252526;
+  --color-off-black-8: rgba(37, 37, 37, 0.1);
+
+  --color-gray-primary: #8e8e93;
+  --color-gray-secondary: #c7c7cc;
+  --color-gray-tertiary: #e5e5ea;
+
+  --color-blue-bg: #e9f5ff;
+  --color-red-bg: #ffeeee;
+  --color-yellow-bg: #fcf6e6;
+
+  --color-blue: #007cff;
+  --color-red: #fd7471;
+  --color-green: #2dc98b;
+  --color-yellow: #facd51;
+
+  --animation-duration-fast: 200ms;
+
+  --animation-curve-basic: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --shadow-basic: 0 0.2rem 0.6rem 0 var(--color-off-black-8);
+}

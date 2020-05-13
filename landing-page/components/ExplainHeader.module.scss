@@ -1,0 +1,46 @@
+.header {
+  align-items: center;
+  background: var(--color-blue-bg);
+  border-radius: 1.8rem;
+  color: var(--color-off-black);
+  display: inline-flex;
+  font-size: 1.4rem;
+  font-weight: 400;
+  height: 3.2rem;
+  line-height: 1.7rem;
+  padding: 0.8rem 1.4rem;
+}
+
+.header::before {
+  background-repeat: no-repeat;
+  background-size: 2rem;
+  content: "";
+  display: inline-block;
+  height: 2rem;
+  margin-right: 1.4rem;
+  width: 2rem;
+}
+
+.header--airplane {
+  transform: rotate(-2deg);
+}
+
+.header--airplane::before {
+  background-image: url(/images/airplane.svg);
+}
+
+.header--reply {
+  transform: rotate(2deg);
+}
+
+.header--reply::before {
+  background-image: url(/images/reply.svg);
+}
+
+.header--shield {
+  transform: rotate(-2deg);
+}
+
+.header--shield::before {
+  background-image: url(/images/shield.svg);
+}

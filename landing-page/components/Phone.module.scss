@@ -1,0 +1,49 @@
+@import "../styles/mixins";
+
+.phone {
+  display: flex;
+  align-items: center;
+  height: 70rem * 5 / 6;
+  justify-content: center;
+  margin: 4rem 0;
+  position: relative;
+  width: 35rem * 5 / 6;
+
+  @include breakpoint(tablet, min) {
+    height: 70rem;
+    width: 35rem;
+    transform: rotate(2deg) translate3d(0, 0, 0);
+  }
+}
+
+.phoneTop,
+.phoneBottom {
+  background-repeat: no-repeat;
+  background-size: 100%;
+  display: block;
+  height: 100%;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+}
+
+.phoneTop {
+  background-image: url(/images/phone_top.svg);
+}
+
+.phoneBottom {
+  background-image: url(/images/phone_bottom.svg);
+}
+
+.phoneContent {
+  background: var(--color-white);
+  border-radius: 2rem;
+  position: absolute;
+  height: calc(100% - (4.8rem * 5 / 6));
+  width: calc(100% - (4.8rem * 5 / 6));
+
+  @include breakpoint(tablet, min) {
+    height: calc(100% - 4.8rem);
+    width: calc(100% - 4.8rem);
+  }
+}

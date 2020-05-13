@@ -1,0 +1,97 @@
+@import "../styles/mixins";
+
+.section {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 4.8rem 0;
+  position: relative;
+
+  @include breakpoint(tablet, min) {
+    padding: 6.4rem 0 9.6rem;
+  }
+
+  @include breakpoint(desktop, min) {
+    padding: 9.6rem 0 14.4rem;
+  }
+}
+
+.letter {
+  background: var(--color-white);
+  border: 0.1rem solid var(--color-gray-secondary);
+  border-radius: 1.2rem;
+  box-shadow: var(--shadow-basic);
+  display: flex;
+  flex-direction: column;
+  max-width: 80rem;
+  padding: 3.2rem 2rem;
+
+  @include breakpoint(phone, min) {
+    padding: 3.2rem;
+  }
+
+  @include breakpoint(tablet, min) {
+    padding: 4.8rem 5.6rem 6.4rem;
+  }
+}
+
+.letter h1 {
+  margin: 0.8rem 0 1.6rem;
+}
+
+.letter h2 {
+  margin: 3.2rem 0 0.8rem;
+}
+
+.letter > ul {
+  margin: 0;
+}
+
+.letter p {
+  font-size: 1.6rem;
+  line-height: 2.24rem;
+  margin: 1.2rem 0;
+}
+
+.letter a {
+  color: var(--color-blue);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.letter a:hover,
+.letter a:focus {
+  text-decoration: underline;
+}
+
+.attribution,
+.attributionEnd {
+  color: var(--color-gray-primary);
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.4;
+  transform: rotate(-6deg);
+  margin: 0 0 2.4rem;
+
+  @include breakpoint(phone, min) {
+    margin: 0 0 3.2rem;
+  }
+
+  @include breakpoint(tablet, min) {
+    margin: 0 0 4rem -0.4rem;
+  }
+}
+
+.attributionEnd {
+  align-self: flex-end;
+  margin: 1.6rem 0 0.8rem;
+}
+
+.avatar {
+  align-self: flex-end;
+  height: 4rem;
+  margin: 0.8rem 0 0;
+  transform: rotate(-6deg);
+  width: 4rem;
+}

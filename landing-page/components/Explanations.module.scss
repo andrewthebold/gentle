@@ -1,0 +1,237 @@
+@import "../styles/mixins";
+
+.wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+
+  @include breakpoint(desktop, min) {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 3.2rem;
+  }
+}
+
+.section {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 3.2rem;
+
+  @include breakpoint(desktop, min) {
+    margin: 0 0 14.4rem;
+  }
+}
+
+.requestStack {
+  align-items: center;
+  display: flex;
+  height: 24rem;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  transition: transform var(--animation-duration-fast)
+    var(--animation-curve-basic);
+}
+
+.requestStack:hover {
+  transform: scale(1.03);
+}
+
+.request {
+  animation-duration: 20s;
+  animation-iteration-count: infinite;
+  animation-timing-function: var(--animation-curve-basic);
+  align-items: center;
+  background-color: var(--color-white);
+  border: 0.1rem solid var(--color-gray-secondary);
+  border-radius: 1.2rem;
+  box-shadow: var(--shadow-basic);
+  display: flex;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  height: 20rem;
+  max-width: 24rem;
+  padding: 1.6rem;
+  position: absolute;
+}
+
+.request::after {
+  background-size: 2.4rem;
+  background-repeat: no-repeat;
+  bottom: 1.6rem;
+  content: "";
+  display: block;
+  height: 2.4rem;
+  position: absolute;
+  right: 1.6rem;
+  width: 2.4rem;
+}
+
+.request--1 {
+  animation-name: request1;
+  transform: rotate(2deg);
+}
+
+.request--1::after {
+  background-image: url(/images/sender_names/cat.svg);
+}
+
+@keyframes request1 {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) rotate(2deg);
+  }
+  5%,
+  28.3% {
+    opacity: 1;
+    transform: rotate(2deg);
+  }
+  33.3%,
+  100% {
+    opacity: 0;
+    transform: scale(0.9) rotate(2deg);
+  }
+}
+
+.request--2 {
+  animation-name: request2;
+  transform: rotate(-2deg);
+}
+
+.request--2::after {
+  background-image: url(/images/sender_names/pizza.svg);
+}
+
+@keyframes request2 {
+  0%,
+  28.3% {
+    opacity: 0;
+    transform: scale(0.9) rotate(-2deg);
+  }
+  33.3%,
+  61.6% {
+    opacity: 1;
+    transform: rotate(-2deg);
+  }
+  66.6%,
+  100% {
+    opacity: 0;
+    transform: scale(0.9) rotate(-2deg);
+  }
+}
+
+.request--3 {
+  animation-name: request3;
+  transform: rotate(1deg);
+}
+
+.request--3::after {
+  background-image: url(/images/sender_names/icecream.svg);
+}
+
+@keyframes request3 {
+  0% {
+    opacity: 1;
+    transform: rotate(1deg);
+  }
+  5%,
+  61.6% {
+    opacity: 0;
+    transform: scale(0.9) rotate(1deg);
+  }
+  66.6%,
+  100% {
+    opacity: 1;
+    transform: rotate(1deg);
+  }
+}
+
+.envelopeStack {
+  align-items: center;
+  display: flex;
+  height: 24rem;
+  justify-content: center;
+  position: relative;
+}
+
+.envelopeStack > img {
+  left: calc(50% - 8.2rem);
+  position: absolute;
+  top: calc(50% - 5.4rem);
+  transition: transform var(--animation-duration-fast)
+    var(--animation-curve-basic);
+}
+
+.envelopeOfficial {
+  transform: rotate(-3deg) translate3d(-3.2rem, -2.4rem, 0);
+}
+
+.envelopeStack:hover .envelopeOfficial {
+  transform: rotate(-5deg) translate3d(-4rem, -3.2rem, 0);
+}
+
+.envelopePlain {
+  transform: rotate(2deg) translate3d(2.4rem, 0, 0);
+}
+
+.envelopeStack:hover .envelopePlain {
+  transform: rotate(5deg) translate3d(3.2rem, 0, 0);
+}
+
+.envelopeAirmail {
+  transform: rotate(-4deg) translate3d(-1.6rem, 2.4rem, 0);
+}
+
+.envelopeStack:hover .envelopeAirmail {
+  transform: rotate(-7deg) translate3d(-2.4rem, 4rem, 0);
+}
+
+.list {
+  padding: 0;
+  list-style: none;
+}
+
+.list li {
+  align-items: center;
+  display: flex;
+  font-size: 1.6rem;
+  line-height: 2.1rem;
+  margin: 1.6rem 0;
+}
+
+.list li::before {
+  background-repeat: no-repeat;
+  background-size: 2.2rem;
+  content: "";
+  display: inline-block;
+  height: 2.2rem;
+  margin-right: 1.6rem;
+  width: 2.2rem;
+  transition: transform var(--animation-duration-fast)
+    var(--animation-curve-basic);
+}
+
+.list li:hover::before {
+  transform: scale(1.2);
+}
+
+.listStamp::before {
+  background-image: url(/images/stamp.svg);
+  transform: rotate(-5deg);
+}
+
+.listRabbit::before {
+  background-image: url(/images/rabbit.svg);
+  transform: rotate(5deg);
+}
+
+.listLock::before {
+  background-image: url(/images/lock.svg);
+  transform: rotate(-5deg);
+}
+
+.listTrash::before {
+  background-image: url(/images/trash.svg);
+  transform: rotate(5deg);
+}

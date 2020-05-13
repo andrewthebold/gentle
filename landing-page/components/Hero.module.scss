@@ -1,0 +1,102 @@
+@import "../styles/mixins";
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 80vh;
+
+  @include breakpoint(desktop, min) {
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.heroContent {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+
+  @include breakpoint(desktop, min) {
+    align-items: flex-start;
+    justify-content: center;
+    height: 100%;
+  }
+}
+
+.phoneWrapper {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.phoneWrapper::before {
+  background: linear-gradient(0deg, #eff7ff 0%, rgba(246, 251, 255, 0) 100%);
+  border-radius: 60rem;
+  content: "";
+  display: block;
+  height: 120rem;
+  pointer-events: none;
+  position: absolute;
+  top: -50rem;
+  width: 120rem;
+  z-index: -1;
+
+  @include breakpoint(desktop, min) {
+    right: -30rem;
+    top: -50rem;
+  }
+}
+
+.title {
+  font-size: 3.2rem;
+  line-height: 3.2rem;
+  font-weight: 700;
+  margin: 4rem 0 1.6rem;
+  max-width: 32rem;
+  text-align: center;
+
+  @include breakpoint(tablet, min) {
+    font-size: 4.4rem;
+    line-height: 4.4rem;
+    margin: 4rem 0 2.4rem;
+    max-width: 40rem;
+  }
+
+  @include breakpoint(desktop, min) {
+    font-size: 5.6rem;
+    line-height: 5.6rem;
+    margin: 3.2rem 0;
+    max-width: 44rem;
+    text-align: left;
+  }
+}
+
+.description {
+  font-size: 1.6rem;
+  line-height: 1.4;
+  margin: 0 0 4rem;
+  max-width: 32rem;
+  text-align: center;
+
+  @include breakpoint(desktop, min) {
+    font-size: 1.8rem;
+    margin: 0 0 8.8rem;
+    max-width: 44rem;
+    text-align: left;
+  }
+}
+
+.updated {
+  color: var(--color-gray-primary);
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+
+  @include breakpoint(tablet, min) {
+    font-size: 1.4rem;
+    line-height: 1.7rem;
+  }
+}

@@ -1,0 +1,50 @@
+.footer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 4.8rem 0;
+}
+
+.ctaWrapper {
+  margin: 4rem 0 9.6rem;
+}
+
+.footerLogo {
+  margin: 0 0 2.4rem;
+}
+
+.footerNav ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+}
+
+.footerNav a {
+  color: var(--color-gray-primary);
+  font-size: 1.4rem;
+  line-height: 1.7rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0.8rem 1.6rem;
+}
+
+.footerNav a:hover,
+.footerNav a:focus {
+  text-decoration: underline;
+}
+
+.copy {
+  color: var(--color-gray-primary);
+  font-size: 1.4rem;
+  line-height: 1.8rem;
+}
+
+.copy a {
+  color: var(--color-gray-primary);
+  text-decoration: none;
+}
+
+.copy a:hover {
+  text-decoration: underline;
+}

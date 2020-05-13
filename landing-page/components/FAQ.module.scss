@@ -1,0 +1,109 @@
+@import "../styles/mixins";
+
+.section {
+  border-top: 0.1rem solid var(--color-gray-tertiary);
+  border-bottom: 0.1rem solid var(--color-gray-tertiary);
+  padding: 4.8rem 0;
+
+  @include breakpoint(tablet, min) {
+    padding: 9.6rem 0;
+  }
+
+  @include breakpoint(desktop, min) {
+    padding: 14.4rem 0;
+  }
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .items {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .items > div {
+    flex: 1;
+  }
+
+  .items > div:first-child {
+    padding-right: 1.6rem;
+  }
+
+  .items > div:last-child {
+    padding-left: 1.6rem;
+  }
+}
+
+.section h2 {
+  font-size: 3.6rem;
+  line-height: 4rem;
+  margin: 0 0 3.2rem;
+}
+
+.section details {
+  margin-bottom: 1.6rem;
+}
+
+.section details > *:last-child:not(summary) {
+  margin-bottom: 4rem;
+}
+
+.section details > *:not(summary) {
+  padding-left: 3.2rem;
+}
+
+.section summary {
+  cursor: pointer;
+  font-size: 1.8rem;
+  font-weight: 600;
+  list-style: none;
+  line-height: 1.4;
+  padding: 0.8rem 0 0.8rem 3.2rem;
+  position: relative;
+}
+
+.section summary::before {
+  background: url(/images/caret.svg) no-repeat;
+  background-size: 1.6rem;
+  content: "";
+  display: inline-block;
+  height: 1.6rem;
+  position: absolute;
+  top: calc(50% - 0.8rem);
+  left: 0;
+  width: 1.6rem;
+}
+
+.section details[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.section summary::-webkit-details-marker {
+  display: none;
+}
+
+.section a {
+  color: var(--color-blue);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.section a:hover,
+.section a:focus {
+  text-decoration: underline;
+}
+
+.section p {
+  font-size: 1.6rem;
+  line-height: 2.24rem;
+}
+
+.section li {
+  margin: 0.8rem 0;
+  font-size: 1.6rem;
+  line-height: 2.24rem;
+}
