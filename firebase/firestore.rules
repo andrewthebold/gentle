@@ -1,0 +1,370 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    allow read, write: if false;
+  
+    // =========================================================================
+    // /users/{userId}
+    // =========================================================================
+    match /users/{userId} {
+      function isRequestedUser() {
+        return request.auth.uid == userId;
+      }
+
+      allow get: if signedIn() && isRequestedUser();
+
+      allow list: if false;
+
+      allow create: if false;
+
+      allow update: if signedIn()
+        && isRequestedUser()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['completedRequests', 'blockedUsers', 'hiddenRequests', 'hiddenLetters'])
+        // Prevent updating more than one of these arrays at once
+        && request.resource.data.diff(resource.data).affectedKeys().size() == 1
+        && (
+          !('completedRequests' in request.resource.data.diff(resource.data).affectedKeys())
+          || (
+            request.resource.data.completedRequests is list
+            && request.resource.data.completedRequests.size() == resource.data.completedRequests.size() + 1
+          )
+        )
+        && (
+          !('blockedUsers' in request.resource.data.diff(resource.data).affectedKeys())
+          || (
+            request.resource.data.blockedUsers is list
+            && request.resource.data.blockedUsers.size() == resource.data.blockedUsers.size() + 1
+          )
+        )
+        && (
+          !('hiddenRequests' in request.resource.data.diff(resource.data).affectedKeys())
+          || (
+            request.resource.data.hiddenRequests is list
+            && request.resource.data.hiddenRequests.size() == resource.data.hiddenRequests.size() + 1
+          )
+        )
+        && (
+          !('hiddenLetters' in request.resource.data.diff(resource.data).affectedKeys())
+          || (
+            request.resource.data.hiddenLetters is list
+            && request.resource.data.hiddenLetters.size() == resource.data.hiddenLetters.size() + 1
+          )
+        );
+
+      allow delete: if false;
+
+      // =======================================================================
+      // /users/{userId}/inbox/{inboxItemId}
+      // =======================================================================
+      match /inbox/{inboxItemId} {
+        allow get: if false;
+
+        allow list: if signedIn()
+          && isRequestedUser()
+          && request.query.limit <= 8;
+
+        allow create: if signedIn()
+          && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.roles.hasAll(['admin']);
+
+        allow update: if false;
+
+        allow delete: if signedIn() && isRequestedUser();
+      }
+
+      // =======================================================================
+      // /users/{userId}/reactionInbox/{reactionInboxItemId}
+      // =======================================================================
+      match /reactionInbox/{reactionInboxItemId} {
+        allow get: if false;
+
+        allow list: if signedIn()
+          && isRequestedUser();
+
+        allow create: if false;
+
+        allow update: if false;
+
+        allow delete: if signedIn() && isRequestedUser();
+      }
+
+      // =======================================================================
+      // /users/{userId}/activityLog/{activityLogItemId}
+      // =======================================================================
+      match /activityLog/{activityLogItemId} {
+        allow get: if false;
+
+        allow list: if signedIn()
+          && isRequestedUser()
+          && request.query.limit <= 20;
+
+        allow create: if signedIn()
+          && isRequestedUser()
+          && request.resource.data.keys().hasOnly(['id', 'creationDate', 'type', 'linkedContentID', 'linkedContentCreatorID', 'linkedContentAvatar', 'linkedContentExcerpt', 'reactionType'])
+          // id: should match the doc id
+          && request.resource.data.id is string
+          && request.resource.data.id == activityLogItemId
+          // creationDate: must match server timestamp
+          && isValidCreationDate(request.resource.data.creationDate)
+          // type
+          && request.resource.data.type is string
+          && request.resource.data.type in ['sentRequest', 'openedMail', 'sentReply']
+          // linkedContentID: ensure the linked content exists
+          && request.resource.data.linkedContentID is string
+          && (
+            existsAfter(/databases/$(database)/documents/requests/$(request.resource.data.linkedContentID))
+            || existsAfter(/databases/$(database)/documents/letters/$(request.resource.data.linkedContentID))
+          )
+          // linkedContentCreatorID
+          && isValidArbitraryID(request.resource.data.linkedContentCreatorID)
+          // linkedContentAvatar
+          && isValidAvatar(request.resource.data.linkedContentAvatar)
+          // linkedContentExcerpt
+          && isValidExcerpt(request.resource.data.linkedContentExcerpt)
+          && (
+            !('reactionType' in request.resource.data.keys())
+            || (
+              request.resource.data.reactionType is string
+              && request.resource.data.reactionType in ['love', 'inspire', 'thanks']
+            )
+          );
+
+        allow update: if false;
+
+        allow delete: if false;
+      }
+    } // match /users/{userId}
+
+    // =========================================================================
+    // /letters/{letterId}
+    // =========================================================================
+    match /letters/{letterId} {
+      allow get: if signedIn()
+        // The recipient can only see the letter if it's published
+        // The sender can see any message they've sent
+        && (
+          resource.data.letterSenderID == request.auth.uid
+          || (
+            resource.data.recipientID == request.auth.uid
+              && resource.data.published == true)
+          // If the doc was deleted, allow fetching
+          || !exists(/databases/$(database)/documents/letters/$(letterId))
+        );
+
+      allow list: if signedIn()
+        && (
+          (
+            resource.data.letterSenderID == request.auth.uid
+          ) || (
+            resource.data.recipientID == request.auth.uid
+            && resource.data.published == true
+          ) || (
+            resource.data.published == false
+            && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.roles.hasAll(['admin'])
+          )
+        );
+
+      allow create: if signedIn()
+        && (
+          (
+            request.resource.data.keys().hasOnly(['id', 'published', 'creationDate', 'requestID', 'requestMessage', 'requestCreatorID', 'requestCreatorAvatar', 'letterSenderID', 'letterSenderAvatar', 'letterMessage', 'recipientID'])
+            // id: should match the doc id
+            && request.resource.data.id is string
+            && request.resource.data.id == letterId
+            // published: should always start unpublished
+            && isUnpublished(request.resource.data.published)
+            // creationDate: must match server timestamp
+            && isValidCreationDate(request.resource.data.creationDate)
+            // requestID (optional)
+            // We allow creation for non-existent requests (it's just not published)
+            // requestMessage
+            && isValidRequestMessage(request.resource.data.requestMessage)
+            // requestCreatorID
+            && isValidArbitraryID(request.resource.data.requestCreatorID)
+            // requestCreatorAvatar
+            && isValidAvatar(request.resource.data.requestCreatorAvatar)
+            // letterSenderID
+            && request.resource.data.letterSenderID is string
+            && request.resource.data.letterSenderID == request.auth.uid
+            // letterSenderAvatar
+            && isValidAvatar(request.resource.data.letterSenderAvatar)
+            // letterMessage
+            && isValidLetterMessage(request.resource.data.letterMessage)
+            // recipientID
+            && isValidArbitraryID(request.resource.data.recipientID)
+            && request.resource.data.recipientID == request.resource.data.requestCreatorID
+          )
+          || (
+            get(/databases/$(database)/documents/users/$(request.auth.uid)).data.roles.hasAll(['admin'])
+          )
+        );
+
+      allow update: if signedIn()
+        && (
+          (
+            resource.data.recipientID == request.auth.uid
+            // Prevent reacting to a letter than already has a reaction
+            && !resource.data.keys().hasAny(['reactionType', 'reactionTime'])
+            && request.resource.data.diff(resource.data).affectedKeys() == ['reactionType', 'reactionTime'].toSet()
+            // reactionType
+            && request.resource.data.reactionType is string
+            && request.resource.data.reactionType in ['love', 'inspire', 'thanks']
+            // reactionTime
+            && isValidCreationDate(request.resource.data.reactionTime)
+          )
+          || (
+            get(/databases/$(database)/documents/users/$(request.auth.uid)).data.roles.hasAll(['admin'])
+          )
+        );
+
+      allow delete: if false;
+    } // match /letters/{letterId}
+
+    // =========================================================================
+    // /requests/{requestID}
+    // =========================================================================
+    match /requests/{requestID} {
+      allow get: if signedIn()
+        && resource.data.requesterID == request.auth.uid;
+
+      allow list: if signedIn()
+        && (
+          (
+            resource.data.published == true
+              && request.query.limit <= 10
+          )
+          || (
+            resource.data.requesterID == request.auth.uid
+          )
+          || (
+            get(/databases/$(database)/documents/users/$(request.auth.uid)).data.roles.hasAll(['admin'])
+              && request.query.limit <= 50
+          )
+        );
+      
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['id', 'published', 'creationDate', 'responseCount', 'requesterID', 'requesterAvatar', 'requestMessage'])
+        // id
+        && request.resource.data.id is string
+        && request.resource.data.id == requestID
+        // published
+        && isUnpublished(request.resource.data.published)
+        // creationDate
+        && isValidCreationDate(request.resource.data.creationDate)
+        // responseCount
+        && request.resource.data.responseCount is int
+        && request.resource.data.responseCount == 0
+        // requesterID
+        && request.resource.data.requesterID is string
+        && request.resource.data.requesterID == request.auth.uid
+        // requesterAvatar
+        && isValidAvatar(request.resource.data.requesterAvatar)
+        // requestMessage
+        && isValidRequestMessage(request.resource.data.requestMessage);
+
+      allow update: if signedIn()
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.roles.hasAll(['admin']);
+
+      allow delete: if false;
+    } // match /requests/{requestID}
+
+    // =========================================================================
+    // /reports/{reportID}
+    // =========================================================================
+    match /reports/{reportID} {
+      allow get: if false;
+
+      allow list: if signedIn()
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.roles.hasAll(['admin']);
+
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['id', 'creationDate', 'status', 'contentID', 'contentCreatorID', 'contentType', 'contentExcerpt', 'reportOption', 'reporterID'])
+        // id: should match the doc id
+        && request.resource.data.id is string
+        && request.resource.data.id == reportID
+        // creationDate: must match server timestamp
+        && isValidCreationDate(request.resource.data.creationDate)
+        // status: should be 'unsolved' on creation
+        && request.resource.data.status is string
+        && request.resource.data.status == 'unsolved'
+        // contentID: ensure the content being reported exists
+        && request.resource.data.contentID is string
+        && (
+          exists(/databases/$(database)/documents/requests/$(request.resource.data.contentID))
+          || exists(/databases/$(database)/documents/letters/$(request.resource.data.contentID))
+        )
+        // contentCreatorID: this user may not longer exist, so we don't check for existence
+        && isValidArbitraryID(request.resource.data.contentCreatorID)
+        // contentType
+        && request.resource.data.contentType is string
+        && request.resource.data.contentType in ['request', 'letter']
+        // contentExcerpt
+        && request.resource.data.contentExcerpt is string
+        && request.resource.data.contentExcerpt.size() <= 2000 // Arbitrary max limit
+        // reportOption
+        && request.resource.data.reportOption is string
+        && request.resource.data.reportOption in ['spam', 'abuse', 'concern', 'pii', 'other']
+        // reporterID must be the authenticated user
+        && request.resource.data.reporterID is string
+        && request.auth.uid == request.resource.data.reporterID;
+
+      allow update: if signedIn()
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.roles.hasAll(['admin']);
+
+      allow delete: if false;
+    } // match /reports/{reportID}
+
+    match /meta/meta {
+      allow get: if signedIn()
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.roles.hasAll(['admin']);
+
+      allow list: if false;
+
+      allow create: if false;
+
+      allow update: if false;
+
+      allow delete: if false;
+    }
+
+    // ===========================================================================
+    // Shared Functions
+    // ===========================================================================
+    function signedIn() { return request.auth.uid != null; }
+
+    function isValidArbitraryID(id) {
+      return id is string
+        && id.size() <= 256; // Arbitrary max limit
+    }
+
+    function isValidAvatar(avatar) {
+      return avatar is string
+        && avatar in ['cat', 'fish', 'gentle', 'icecream', 'leaf', 'pizza'];
+    }
+
+    function isUnpublished(published) {
+      return published is bool
+        && published == false;
+    }
+
+    function isValidCreationDate(creationDate) {
+      return creationDate is timestamp
+        && creationDate == request.time;
+    }
+
+    function isValidRequestMessage(message) {
+      return message is string
+        && message.size() <= 320;
+    }
+
+    function isValidLetterMessage(message) {
+      return message is string
+        && message.size() <= 640;
+    }
+
+    function isValidExcerpt(excerpt) {
+      return excerpt is string
+        && excerpt.size() <= 50;
+    }
+  } // match /databases/{database}/documents
+} // service

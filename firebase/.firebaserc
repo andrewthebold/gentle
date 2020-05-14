@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "<REDACTED_PROJECT_ID>",
+    "sandbox": "<REDACTED_PROJECT_ID>",
+    "prod": "<REDACTED_PROJECT_ID>"
+  }
+}
