@@ -40,6 +40,8 @@ Gentle's firebase setup uses:
 - [Firebase Cloud Functions](https://firebase.google.com/docs/functions)
 - [Google Cloud NLP API](https://cloud.google.com/natural-language)
 
+You should look at [Firebase's CLI docs](https://firebase.google.com/docs/cli) for info on how to deploy this code.
+
 ## Removed code
 
 - Testing code (defunct and out-of-sync with Firestore rules)
