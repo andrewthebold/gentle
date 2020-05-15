@@ -1,10 +1,10 @@
 # Firebase Setup
 
-This is the Firebase config and code that handles the "backend" of Gentle.
+This is the Firebase config and code that handles the "backend" of [Gentle](https://github.com/andrewsoohwanlee/gentle).
 
 ## Parts
 
-1. Firestore rules (`.firestore.rules`)
+1. Firestore rules (`firestore.rules`)
 
    - Enforces read/write permissions
 
@@ -14,7 +14,7 @@ This is the Firebase config and code that handles the "backend" of Gentle.
 
 3. Firebase Cloud Functions (`functions/`)
 
-   - Uses Firestore triggers to handle publishing user-generated content
+   - Gentle uses Firestore triggers to handle publishing user-generated content
    - Runs scheduled functions to calculate metrics and send notifications
 
 ## Folder structure
@@ -24,7 +24,6 @@ This is the Firebase config and code that handles the "backend" of Gentle.
 ├── functions                 # Firebase Cloud Function code
 │   └── src                   # Function code (see index.ts) for a starting point
 │       └── validators        # Logic to determine whether or not to publish content
-├── tests                     # Defunct testing code for Firestore rules
 ├── .firebaserc               # Used to help swap between prod/sandbox projects
 ├── firestore.indexes.json    # Firestore indexes
 └── firestore.rules           # Firestore rules
@@ -46,7 +45,7 @@ You should look at [Firebase's CLI docs](https://firebase.google.com/docs/cli) f
 
 - Testing code (defunct and out-of-sync with Firestore rules)
 - Various URL's, secrets, and ID's were redacted
-- Bad words list
+- Bad words list (you can find many alternatives on GitHub)
 
 ## Notes
 

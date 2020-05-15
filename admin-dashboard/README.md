@@ -1,6 +1,6 @@
 # Gentle Admin Dashboard
 
-This is the [create-react-app](https://reactjs.org/docs/create-a-new-react-app.html)-based admin dashboard for Gentle. This was used to monitor some metrics and handle moderation.
+This is the [create-react-app](https://reactjs.org/docs/create-a-new-react-app.html)-based admin dashboard for [Gentle](https://github.com/andrewsoohwanlee/gentle). This was used to monitor some metrics and handle moderation.
 
 > ⚠️ This is frankly the least cared-for part of the Gentle codebase. It was made as quickly as possible and isn't very powerful.
 

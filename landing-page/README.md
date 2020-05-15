@@ -1,6 +1,6 @@
 # Landing Page
 
-This is the [Next.js](https://nextjs.org/)-based landing page live on [gentle.app](https://gentle.app).
+This is the [Next.js](https://nextjs.org/)-based landing page live on [gentle.app](https://gentle.app). It was used to market [Gentle](https://github.com/andrewsoohwanlee/gentle).
 
 ## Folder structure
 

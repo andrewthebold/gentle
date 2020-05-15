@@ -9,9 +9,9 @@ The app [shutdown in May 2020](https://gentle.app/shutdown), and I decided to re
 ## Links
 
 - 📃 [Read about the app's shutdown](https://gentle.app/shutdown)
-- 💬 [Read my retro article](https://andrewlee.design/blog/designing-gentle) (includes metrics, motivation, design principles, and more stuff that would be useful to know)
+- 💬 [Read my article about designing Gentle](https://andrewlee.design/blog/designing-gentle) (includes metrics, motivation, design principles, etc.)
 - 🎨 [View the master Figma file for Gentle](https://www.figma.com/community/file/842929427415891293/)
-- 🛣 [View the Trello board roadmap for Gentle](https://trello.com/b/65BxuxBa/gentle-roadmap) (you can get a sense for where Gentle was going and which features I wanted for the official launch)
+- 🛣 [View the Trello board roadmap for Gentle](https://trello.com/b/65BxuxBa/gentle-roadmap) (you can get a sense for where Gentle was going)
 
 ## Folder Structure
 
@@ -27,13 +27,13 @@ Each folder has its own `README` with relevant information.
 
 ## About _Gentle_'s Brand
 
-While Gentle's design and code are now publicly available, I am unlikely to transfer the [gentle.app](https://gentle.app/) domain name or endorse any product based on this work.
+While Gentle's design and code are now publicly available, I am unlikely to transfer the [gentle.app](https://gentle.app/) domain name or endorse any product claiming to be "Gentle".
 
-You are welcome to reuse any of this code (please follow the LICENSE), but I recommend you choose a different product name to differentiate yourself. Not a requirement by any means, but it's probably a good move to set expectations of new ownership.
+You are welcome to reuse any of this code, but I recommend you choose a different product name to differentiate yourself. Not a requirement by any means, but it's probably a good move to set expectations of new ownership.
 
 ## Need help?
 
-I am no longer actively supporting Gentle. Helping people interested in using this work is not my priority.
+I am no longer actively supporting Gentle.
 
 You are welcome to reach me at [hi@andrewlee.design](mailto:hi@andrewlee.design), but I may be slow to respond and/or decline your request.
 

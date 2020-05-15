@@ -1,6 +1,6 @@
 # Gentle Flutter App
 
-This is the Flutter code for Gentle — likely the most interesting part of this project. This is a snapshot of the codebase at time of shutdown, meaning parts of it may be incomplete or out-of-date.
+This is the Flutter code for [Gentle](https://github.com/andrewsoohwanlee/gentle) — likely the most interesting part of this project. This is a snapshot of the codebase at time of shutdown, meaning parts of it may be incomplete or out-of-date.
 
 ## Folder structure
 
