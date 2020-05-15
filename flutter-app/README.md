@@ -4,7 +4,7 @@ This is the Flutter code for Gentle — likely the most interesting part of this
 
 ## Folder structure
 
-Here are list of relevant folders (I'm assuming you are already familiar with Flutter projects).
+Here's a list of relevant folders (I'm assuming you are already familiar with Flutter projects).
 
 ```
 .
@@ -31,7 +31,7 @@ Here are list of relevant folders (I'm assuming you are already familiar with Fl
 
 I am not providing specific support to get this running, but here are some basic things to do in order to setup the project:
 
-1. Familiarize yourself with all the packages used in `pubspect.yaml` (for example, the use of [`freezed`](https://pub.dev/packages/freezed) for generated data model files).
+1. Familiarize yourself with all the packages used in `pubspec.yaml` (for example, the use of [`freezed`](https://pub.dev/packages/freezed) for generated data model files).
 2. Add Firebase `GoogleService-Info.plist` files to `ios/config/dev` (dev environment) and `ios/config/prod` (production environment).
 3. Add the [Inter font files](https://rsms.me/inter/) specified in `pubspec.yaml`.
 4. Add a Sentry DSN to `lib/services/error_reporter.dart`, or modify the code to not use Sentry.
@@ -46,5 +46,5 @@ I am not providing specific support to get this running, but here are some basic
 ## Notes
 
 - The last flutter version this codebase worked with is `0.15.17`.
-- The state management system I chose was `provider` and `ChangeNotifier`s.
-- No testing code whatsoever. Like with other parts of Gentle, I prioritized speed. In beta, most bugs were inherent to Flutter rather than my code.
+- The state management system I chose was using the `provider` package with `ChangeNotifier`s.
+- No testing code whatsoever. I didn't prioritize it for Gentle. 🤷‍♂️
