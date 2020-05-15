@@ -1,0 +1,79 @@
+name: gentle
+description: A social network for compassion.
+
+version: 0.1.0+8
+
+environment:
+  sdk: ">=2.6.0 <3.0.0"
+  flutter: ^0.15.17
+
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_core: ^0.4.4+3
+  firebase_auth: ^0.16.0
+  cloud_firestore: ^0.13.5
+  provider: ^4.0.5
+  dotted_border: ^1.0.5
+  simple_animations: ^2.1.1
+  shared_preferences: ^0.5.7
+  enum_to_string: ^1.0.9
+  auto_size_text: ^2.1.0
+  async: ^2.4.1
+  flutter_staggered_animations: ^0.1.2
+  url_launcher: ^5.4.5
+  sentry: ^3.0.1
+  get_it: ^4.0.1
+  package_info: ">=0.4.0+17 <2.0.0"
+  intl: ^0.16.1
+  characters: ^0.5.0
+  freezed_annotation: ^0.7.1
+  json_serializable: ^3.3.0
+  device_info: ^0.4.2+2
+  csv: ^4.0.3
+  flutter_mailer: ^0.4.1+1
+  path_provider: ^1.6.7
+
+dev_dependencies:
+  lint: ^1.1.1
+  build_runner: ^1.9.0
+  freezed: ^0.10.7
+
+flutter:
+  assets:
+    - assets/images/icons/16x16/
+    - assets/images/icons/24x24/
+    - assets/images/icons/32x32/
+    - assets/images/icons/40x40/
+    - assets/images/icons/48x48/
+    - assets/images/icons/56x56/
+    - assets/images/avatars/
+    - assets/images/stamps/
+    - assets/images/mail/
+    - assets/images/illustrations/emptystates/
+    - assets/images/illustrations/
+    - assets/images/reactions/
+
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Inter-Italic.ttf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/Inter-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Inter-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/Inter-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Inter-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/Inter-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Inter-BoldItalic.ttf
+          weight: 700
+          style: italic
